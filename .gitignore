@@ -1,2 +1,6 @@
 venv
 doc/build/doctrees
+build
+dist
+src/pywireguard/wireguard.c
+src/*.egg-info

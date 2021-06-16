@@ -1,0 +1,3 @@
+include src/pywireguard/*
+include src/pywireguard/c_lib/*
+include VERSION
