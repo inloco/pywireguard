@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>pywireguard latest documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-pywireguard-s-documentation">
+<h1>Welcome to pywireguard’s documentation!<a class="headerlink" href="#welcome-to-pywireguard-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>A python bind to wireguard C lib</p>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-pywireguard"></span><dl class="py function">
+<dt class="sig sig-object py" id="pywireguard.generate_keys">
+<span class="sig-prename descclassname"><span class="pre">pywireguard.</span></span><span class="sig-name descname"><span class="pre">generate_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.generate_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates wireguard random keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dict containing a private key, its corresponding public key and a pre-shared key.</p>
+</dd>
+</dl>
+<p>Return example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;private_key&#39;</span><span class="p">:</span> <span class="sa">b</span><span class="s1">&#39;CBHLv4rj20nG9BX2cl9SfMzd3Q7fjC0yHklan1Mnuk0=&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;public_key&#39;</span><span class="p">:</span> <span class="sa">b</span><span class="s1">&#39;LpWmEA1r5lFYZNeQtQSkTtaHBKvHYQyMKXGUGIc2AC4=&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;preshared_key&#39;</span><span class="p">:</span> <span class="sa">b</span><span class="s1">&#39;AWlk9L1O7v1MHiqt+zck1Gyxo9Zxl3EBU4EqM3DZcEE=&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pywireguard.AllowedIP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pywireguard.</span></span><span class="sig-name descname"><span class="pre">AllowedIP</span></span><a class="headerlink" href="#pywireguard.AllowedIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a Wireguard allowed IP</p>
+<p>An IPv4 addresses with CIDR masks from which incoming traffic for a peer is allowed
+and to which outgoing traffic for this peer is directed. The catch-all 0.0.0.0/0 may be
+specified for matching all IPv4 addresses.</p>
+<p>Typical usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">allowed_ip</span> <span class="o">=</span> <span class="n">AllowedIP</span><span class="p">(</span>
+    <span class="n">ip</span><span class="o">=</span><span class="s1">&#39;10.18.0.1&#39;</span><span class="p">,</span>
+    <span class="n">cidr</span><span class="o">=</span><span class="mi">32</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.AllowedIP.cidr">
+<span class="sig-name descname"><span class="pre">cidr</span></span><a class="headerlink" href="#pywireguard.AllowedIP.cidr" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integet IPv4 CIDR mask</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.AllowedIP.ip">
+<span class="sig-name descname"><span class="pre">ip</span></span><a class="headerlink" href="#pywireguard.AllowedIP.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string representation of an IPv4 address</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pywireguard.Device">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pywireguard.</span></span><span class="sig-name descname"><span class="pre">Device</span></span><a class="headerlink" href="#pywireguard.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a Wireguard device</p>
+<p>An abstraction to a Wireguard tunnel interface.</p>
+<p>Typical usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg0</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="s1">&#39;wg0&#39;</span><span class="p">)</span> <span class="c1"># Read device data or creates a new one</span>
+<span class="n">peer</span> <span class="o">=</span> <span class="n">Peer</span><span class="p">(</span>
+    <span class="n">public_key</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;GNfYWhcvNeCfUkcIsCg108Y1vRNpK7eQuxE+42EeTAE=&#39;</span>
+<span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">add_peer</span><span class="p">(</span><span class="n">peer</span><span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.add_peer">
+<span class="sig-name descname"><span class="pre">add_peer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.add_peer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new peer to device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>peer</strong> – a Peer object.</p>
+</dd>
+</dl>
+<p>Typical usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg0</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="s1">&#39;wg0&#39;</span><span class="p">)</span>
+<span class="n">peer</span> <span class="o">=</span> <span class="n">Peer</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">add_peer</span><span class="p">(</span><span class="n">peer</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.clear_peers">
+<span class="sig-name descname"><span class="pre">clear_peers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.clear_peers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all Peers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the current device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.get_peers">
+<span class="sig-name descname"><span class="pre">get_peers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.get_peers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of device peers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.has_fwmark">
+<span class="sig-name descname"><span class="pre">has_fwmark</span></span><a class="headerlink" href="#pywireguard.Device.has_fwmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.has_listen_port">
+<span class="sig-name descname"><span class="pre">has_listen_port</span></span><a class="headerlink" href="#pywireguard.Device.has_listen_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.has_private_key">
+<span class="sig-name descname"><span class="pre">has_private_key</span></span><a class="headerlink" href="#pywireguard.Device.has_private_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.has_public_key">
+<span class="sig-name descname"><span class="pre">has_public_key</span></span><a class="headerlink" href="#pywireguard.Device.has_public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lista all Wireguard devices.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.listen_port">
+<span class="sig-name descname"><span class="pre">listen_port</span></span><a class="headerlink" href="#pywireguard.Device.listen_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>The device listen port.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pywireguard.Device.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Wireguard device name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.private_key">
+<span class="sig-name descname"><span class="pre">private_key</span></span><a class="headerlink" href="#pywireguard.Device.private_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base64 representation of a Wireguard private key. Requires an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.public_key">
+<span class="sig-name descname"><span class="pre">public_key</span></span><a class="headerlink" href="#pywireguard.Device.public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base64 representation of a Wireguard public key. Is generated from private key after an update.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.reload">
+<span class="sig-name descname"><span class="pre">reload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload device information from Wireguard.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Device.replace_peers">
+<span class="sig-name descname"><span class="pre">replace_peers</span></span><a class="headerlink" href="#pywireguard.Device.replace_peers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Device.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Device.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the device state.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pywireguard.Peer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pywireguard.</span></span><span class="sig-name descname"><span class="pre">Peer</span></span><a class="headerlink" href="#pywireguard.Peer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a Wireguard Peer</p>
+<p>An abstraction to a Wireguard peer.</p>
+<p>Typical usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg0</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="s1">&#39;wg0&#39;</span><span class="p">)</span>
+<span class="n">peer</span> <span class="o">=</span> <span class="n">Peer</span><span class="p">(</span>
+    <span class="n">public_key</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;GNfYWhcvNeCfUkcIsCg108Y1vRNpK7eQuxE+42EeTAE=&#39;</span>
+<span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">add_peer</span><span class="p">(</span><span class="n">peer</span><span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Peer.add_allowed_ip">
+<span class="sig-name descname"><span class="pre">add_allowed_ip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Peer.add_allowed_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new allowed IP to device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>allowed_ip</strong> – an AllowedIP object.</p>
+</dd>
+</dl>
+<p>Typical usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg0</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="s1">&#39;wg0&#39;</span><span class="p">)</span>
+<span class="n">peer</span> <span class="o">=</span> <span class="n">Peer</span><span class="p">()</span>
+<span class="n">allowed_ip</span> <span class="o">=</span> <span class="n">AllowedIP</span><span class="p">()</span>
+<span class="n">allowed_ip</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s1">&#39;10.18.0.0&#39;</span>
+<span class="n">allowed_ip</span><span class="o">.</span><span class="n">cidr</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">peer</span><span class="o">.</span><span class="n">add_allowed_ip</span><span class="p">(</span><span class="n">allowed_ip</span><span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">add_peer</span><span class="p">(</span><span class="n">peer</span><span class="p">)</span>
+<span class="n">wg0</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Peer.clear_allowed_ips">
+<span class="sig-name descname"><span class="pre">clear_allowed_ips</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Peer.clear_allowed_ips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all allowed IPs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pywireguard.Peer.get_allowed_ips">
+<span class="sig-name descname"><span class="pre">get_allowed_ips</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywireguard.Peer.get_allowed_ips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of peer allowed IPs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.has_persistent_keepalive_interval">
+<span class="sig-name descname"><span class="pre">has_persistent_keepalive_interval</span></span><a class="headerlink" href="#pywireguard.Peer.has_persistent_keepalive_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.has_preshared_key">
+<span class="sig-name descname"><span class="pre">has_preshared_key</span></span><a class="headerlink" href="#pywireguard.Peer.has_preshared_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.has_public_key">
+<span class="sig-name descname"><span class="pre">has_public_key</span></span><a class="headerlink" href="#pywireguard.Peer.has_public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.preshared_key">
+<span class="sig-name descname"><span class="pre">preshared_key</span></span><a class="headerlink" href="#pywireguard.Peer.preshared_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base64 representation of a Wireguard preshared key for this peer.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.public_key">
+<span class="sig-name descname"><span class="pre">public_key</span></span><a class="headerlink" href="#pywireguard.Peer.public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base64 representation of a Wireguard public key for this peer.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.remove_me">
+<span class="sig-name descname"><span class="pre">remove_me</span></span><a class="headerlink" href="#pywireguard.Peer.remove_me" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pywireguard.Peer.replace_allowedips">
+<span class="sig-name descname"><span class="pre">replace_allowedips</span></span><a class="headerlink" href="#pywireguard.Peer.replace_allowedips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag used to mark what changes in an update.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">pywireguard</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Paulo Luna.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
