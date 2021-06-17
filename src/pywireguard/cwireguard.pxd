@@ -88,6 +88,7 @@ cdef extern from "c_lib/wireguard.h":
     int wg_get_device(wg_device **dev, const char *device_name)
     int wg_del_device(const char *device_name)
     int wg_set_device(wg_device *dev)
+    void wg_free_device(wg_device *dev)
 
 cdef extern from "c_lib/c_fixes.c":
     char *wg_list_device_names_fixed()

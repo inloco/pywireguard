@@ -2,6 +2,7 @@ cimport cwireguard
 from cpython.mem cimport PyMem_Malloc, PyMem_Free
 import socket
 import logging
+from libcpp cimport bool
 
 
 def allowed_ip_to_list(allowed_ip: AllowedIP):
@@ -72,11 +73,13 @@ cdef class AllowedIP:
     """
     cdef cwireguard.wg_allowedip* _allowedip
     cdef AllowedIP _next_allowedip
+    cdef bool mem_allocated
 
     def __cinit__(
         self, peer: Peer = None, parent_ip: AllowedIP = None,
         ip: str = None, cidr: int = None
     ):
+        self.mem_allocated = False
         if peer is not None:
             self._allowedip = peer._peer.first_allowedip
             if self._allowedip.next_allowedip is not NULL:
@@ -87,6 +90,7 @@ cdef class AllowedIP:
                 self._next_allowedip = AllowedIP(parent_ip=self)
         else:
             self._allowedip = <cwireguard.wg_allowedip*> PyMem_Malloc(sizeof(cwireguard.wg_allowedip))
+            self.mem_allocated = True
             if self._allowedip is NULL:
                 raise MemoryError()
             self._allowedip.next_allowedip = NULL
@@ -97,7 +101,8 @@ cdef class AllowedIP:
             self.cidr = cidr
 
     def __dealloc__(self):
-        PyMem_Free(self._allowedip)
+        if self.mem_allocated:
+            PyMem_Free(self._allowedip)
 
     def __repr__(self):
         return f"{self.ip}/{self.cidr}"
@@ -152,6 +157,9 @@ cdef class Device:
             logging.info("Using existing device.")
         self.device_name = device_name
         self.reload()
+
+    def __dealloc__(self):
+        cwireguard.wg_free_device(self._device)
 
     def get_peers(self):
         """Get the list of device peers."""
@@ -243,9 +251,6 @@ cdef class Device:
         if cwireguard.wg_del_device(self._device.name) < 0:
             raise InvalidOperationException("Unable to delete device")
 
-    def __dealloc__(self):
-        PyMem_Free(self._device)
-
     ######### FLAGS ###########
     @property
     def replace_peers(self) -> bool:
@@ -325,12 +330,13 @@ cdef class Peer:
     cdef cwireguard.wg_peer* _peer
     cdef Peer next_peer
     cdef AllowedIP _first_allowedip
+    cdef bool mem_allocated
 
     def __cinit__(
         self, device: Device = None, parent_peer: Peer = None,
         public_key: bytes = None, preshared_key: bytes = None
     ):
-
+        self.mem_allocated = False
         if device is not None:
             self._peer = device._device.first_peer
             if self._peer.next_peer is not NULL:
@@ -340,6 +346,7 @@ cdef class Peer:
             if self._peer.next_peer is not NULL:
                 self.next_peer = Peer(parent_peer=self)
         else:
+            self.mem_allocated = True
             self._peer = <cwireguard.wg_peer*> PyMem_Malloc(sizeof(cwireguard.wg_peer))
             if self._peer is NULL:
                 raise MemoryError()
@@ -359,7 +366,8 @@ cdef class Peer:
             self.preshared_key = preshared_key
 
     def __dealloc__(self):
-        PyMem_Free(self._peer)
+        if self.mem_allocated:
+            PyMem_Free(self._peer)
 
     def get_allowed_ips(self):
         """Get the list of peer allowed IPs."""
