@@ -47,11 +47,14 @@ cdef extern from "c_lib/wireguard.h":
         WGPEER_HAS_PRESHARED_KEY = 1U << 3,
         WGPEER_HAS_PERSISTENT_KEEPALIVE_INTERVAL = 1U << 4
 
+    ctypedef union u_endpoint:
+        sockaddr_in addr4
+
     ctypedef struct wg_peer:
         wg_peer_flags flags
         wg_key public_key
         wg_key preshared_key
-        sockaddr_in endpoint
+        u_endpoint endpoint
         timespec64 last_handshake_time
         uint64_t rx_bytes, tx_bytes
         uint16_t persistent_keepalive_interval

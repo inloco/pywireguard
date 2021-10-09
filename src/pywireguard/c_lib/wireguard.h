@@ -40,17 +40,19 @@ enum wg_peer_flags {
 	WGPEER_HAS_PERSISTENT_KEEPALIVE_INTERVAL = 1U << 4
 };
 
+typedef union u_endpoint {
+	struct sockaddr_in addr4;
+	struct sockaddr_in6 addr6;
+	struct sockaddr addr;
+} u_endpoint;
+
 typedef struct wg_peer {
 	enum wg_peer_flags flags;
 
 	wg_key public_key;
 	wg_key preshared_key;
 
-	union {
-		struct sockaddr addr;
-		struct sockaddr_in addr4;
-		struct sockaddr_in6 addr6;
-	} endpoint;
+	union u_endpoint endpoint;
 
 	struct timespec64 last_handshake_time;
 	uint64_t rx_bytes, tx_bytes;
