@@ -417,7 +417,6 @@ cdef class Peer:
         self.has_public_key = True
         cwireguard.wg_key_from_base64(self._peer.public_key, b64_key)
 
-
     @property
     def preshared_key(self):
         """The base64 representation of a Wireguard preshared key for this peer."""
@@ -429,6 +428,36 @@ cdef class Peer:
     def preshared_key(self, bytes b64_key):
         self.has_preshared_key = True
         cwireguard.wg_key_from_base64(self._peer.preshared_key, b64_key)
+
+    @property
+    def endpoint(self):
+        """An endpoint IP or hostname, followed by a colon, and then a port number.
+
+        This endpoint will be updated automatically to the most recent source IP address and port
+         of correctly authenticated packets from the peer.
+
+
+        Typical usage example::
+
+            wg0 = Device('wg0')
+            peer = wg0.get_peers()[0]
+            peer.endpoint = 'x.x.x.x:xxxx' # peer ip and port
+            wg0.update()
+        """
+        # cdef cwireguard.wg_key_b64_string b64_key
+        ipaddr = socket.inet_ntoa(
+            self._peer.endpoint.addr4.sin_addr.s_addr.to_bytes(4, 'little')
+        )
+        port = socket.ntohs(self._peer.endpoint.addr4.sin_port)
+
+        return f"{ipaddr}:{port}"
+
+    @endpoint.setter
+    def endpoint(self, str address):
+        address_data = address.split(':')
+        ip_bytes = socket.inet_aton(address_data[0])
+        self._peer.endpoint.addr4.sin_addr.s_addr = int.from_bytes(ip_bytes, byteorder='little', signed=False)
+        self._peer.endpoint.addr4.sin_port = socket.htons(int(address_data[1]))
 
     ######### FLAGS ###########
     @property
