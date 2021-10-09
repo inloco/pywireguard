@@ -6,7 +6,7 @@
 Welcome to pywireguard's documentation!
 =======================================
 
-A python bind to the Wireguard single-file C library.
+A python bind to the Wireguard single-file C library. 
 
 .. toctree::
    :maxdepth: 2
