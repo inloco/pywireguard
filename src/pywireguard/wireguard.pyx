@@ -431,7 +431,7 @@ cdef class Peer:
 
     @property
     def endpoint(self):
-        """An endpoint IP or hostname, followed by a colon, and then a port number.
+        """An endpoint IP followed by a colon, and then a port number.
 
         This endpoint will be updated automatically to the most recent source IP address and port
          of correctly authenticated packets from the peer.
