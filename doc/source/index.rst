@@ -6,29 +6,16 @@
 Welcome to pywireguard's documentation!
 =======================================
 
-A python bind to the Wireguard single-file C library. 
+A cross-platform python library for managing WireGuard interfaces.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: pywireguard
-   :members: generate_keys
+   interface
+   peer
+   utils
 
-|
-
-.. autoclass:: pywireguard::AllowedIP
-   :members:
-
-|
-
-.. autoclass:: pywireguard::Device
-   :members:
-
-|
-
-.. autoclass:: pywireguard::Peer
-   :members:
 
 |
 
