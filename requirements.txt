@@ -1,3 +1,2 @@
-pynacl~=1.4.0
 pyroute2.core~=0.6.5
 cryptography~=3.4.7

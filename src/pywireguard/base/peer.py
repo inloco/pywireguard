@@ -10,9 +10,9 @@ class Peer(ABC):
 
     Attributes
     ----------
-    public_key : str
+    public_key : bytes
         The base64 representation of a WireGuard public key for this peer. (read-only)
-    preshared_key : str
+    preshared_key : bytes
         The base64 representation of a WireGuard preshared key for this peer.
     endpoint : str
         An endpoint IP followed by a colon, and then a port number.
@@ -28,7 +28,8 @@ class Peer(ABC):
         The number of nano-seconds of the most recent handshake for the peer. (read-only)
     """
 
-    def __init__(self, public_key: str, preshared_key: str = None, endpoint: str = None, allowed_ips: List[str] = None,
+    def __init__(self, public_key: bytes, preshared_key: bytes = None, endpoint: str = None,
+                 allowed_ips: List[str] = None,
                  rx_bytes: int = None, tx_bytes: int = None, last_handshake_time_sec: int = None,
                  last_handshake_time_nsec: int = None):
         self._public_key = public_key
@@ -41,7 +42,7 @@ class Peer(ABC):
         self.last_handshake_time_nsec = last_handshake_time_nsec
 
     @property
-    def public_key(self) -> str:
+    def public_key(self) -> bytes:
         return self._public_key
 
     @abstractmethod

@@ -18,6 +18,10 @@ class Interface(ABC):
     """
 
     @abstractmethod
+    def __init__(self, name):
+        pass
+
+    @abstractmethod
     def _get_private_key(self) -> bytes:
         pass
 
