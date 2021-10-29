@@ -11,5 +11,6 @@ class UserspacePeer(Peer):
         if self.endpoint is not None:
             result += f"\nendpoint={self.endpoint}"
         if self.allowed_ips is not None:
-            result += "\n" + "\n".join([f"allowed_ip={ip}" for ip in self.allowed_ips])
+            result += "\nreplace_allowed_ips=true\n" \
+                      + "\n".join([f"allowed_ip={ip}" for ip in self.allowed_ips])
         return result
