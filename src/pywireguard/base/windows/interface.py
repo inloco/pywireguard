@@ -14,7 +14,7 @@ class WindowsInterface(UserspaceInterface):
         if not os.path.exists(self.pipe):
             raise BadInterfaceName()
 
-    def _pipe_command(self, command):
+    def _pipe_command(self, command) -> str:
         buffer = ''
         error_count = 0
         while error_count < 10:
@@ -32,5 +32,5 @@ class WindowsInterface(UserspaceInterface):
     def _command_get(self) -> str:
         return self._pipe_command(b'get=1\n\n')
 
-    def _command_set(self, command: str):
+    def _command_set(self, command: str) -> None:
         self._pipe_command(f'set=1\n{command}\n\n'.encode())
