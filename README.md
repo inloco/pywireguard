@@ -1,5 +1,5 @@
 # pyWireguard
 
-A python bind to the Wireguard single-file C library.
+A cross-platform Python library for managing WireGuard interfaces.
 
 [Documentation](https://pywireguard.readthedocs.io/en/latest/)
