@@ -40,4 +40,3 @@ class DarwinInterface(UserspaceInterface):
         while '\n\n' not in buffer:
             buffer += sock.recv(1024).decode()
         sock.close()
-        print(buffer)

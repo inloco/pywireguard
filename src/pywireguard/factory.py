@@ -14,5 +14,11 @@ elif sys.platform == 'darwin':
 
     Interface = DarwinInterface
     Peer = UserspacePeer
+elif sys.platform == 'win32':
+    from .base.windows.interface import WindowsInterface
+    from .base.userspace.peer import UserspacePeer
+
+    Interface = WindowsInterface
+    Peer = UserspacePeer
 else:
     raise UnsupportedPlatform()

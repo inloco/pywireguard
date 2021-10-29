@@ -4,3 +4,7 @@ class BadInterfaceName(Exception):
 
 class UnsupportedPlatform(Exception):
     pass
+
+
+class RetryAttemptsExceeded(Exception):
+    pass
