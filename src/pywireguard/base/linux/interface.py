@@ -52,24 +52,25 @@ class LinuxInterface(Interface):
     def _get_peers(self) -> List[Peer]:
         result = list()
         peers = self._get_interface_attribute('WGDEVICE_A_PEERS')
-        for peer in peers:
-            endpoint_data = self._get_attribute(peer, 'WGPEER_A_ENDPOINT')
-            allowed_ips_data = self._get_attribute(peer, 'WGPEER_A_ALLOWEDIPS')
-            allowed_ips = [allowed_ip['addr'] for allowed_ip in allowed_ips_data] \
-                if allowed_ips_data is not None else list()
-            endpoint = f"{endpoint_data['addr']}:{endpoint_data['port']}" if endpoint_data is not None else None
+        if peers is not None:
+            for peer in peers:
+                endpoint_data = self._get_attribute(peer, 'WGPEER_A_ENDPOINT')
+                allowed_ips_data = self._get_attribute(peer, 'WGPEER_A_ALLOWEDIPS')
+                allowed_ips = [allowed_ip['addr'] for allowed_ip in allowed_ips_data] \
+                    if allowed_ips_data is not None else list()
+                endpoint = f"{endpoint_data['addr']}:{endpoint_data['port']}" if endpoint_data is not None else None
 
-            n_peer = LinuxPeer(
-                public_key=self._get_attribute(peer, 'WGPEER_A_PUBLIC_KEY'),
-                preshared_key=self._get_attribute(peer, 'WGPEER_A_PRESHARED_KEY'),
-                last_handshake_time_sec=self._get_attribute(peer, 'WGPEER_A_LAST_HANDSHAKE_TIME')['tv_sec'],
-                last_handshake_time_nsec=self._get_attribute(peer, 'WGPEER_A_LAST_HANDSHAKE_TIME')['tv_nsec'],
-                rx_bytes=self._get_attribute(peer, 'WGPEER_A_RX_BYTES'),
-                tx_bytes=self._get_attribute(peer, 'WGPEER_A_TX_BYTES'),
-                endpoint=endpoint,
-                allowed_ips=allowed_ips
-            )
-            result.append(n_peer)
+                n_peer = LinuxPeer(
+                    public_key=self._get_attribute(peer, 'WGPEER_A_PUBLIC_KEY'),
+                    preshared_key=self._get_attribute(peer, 'WGPEER_A_PRESHARED_KEY'),
+                    last_handshake_time_sec=self._get_attribute(peer, 'WGPEER_A_LAST_HANDSHAKE_TIME')['tv_sec'],
+                    last_handshake_time_nsec=self._get_attribute(peer, 'WGPEER_A_LAST_HANDSHAKE_TIME')['tv_nsec'],
+                    rx_bytes=self._get_attribute(peer, 'WGPEER_A_RX_BYTES'),
+                    tx_bytes=self._get_attribute(peer, 'WGPEER_A_TX_BYTES'),
+                    endpoint=endpoint,
+                    allowed_ips=allowed_ips
+                )
+                result.append(n_peer)
         return result
 
     def _upsert_peer(self, peer: Peer) -> None:
