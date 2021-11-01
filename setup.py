@@ -1,11 +1,3 @@
-from setuptools import Extension, setup
-from Cython.Build import cythonize
+import setuptools
 
-setup(
-    ext_modules=cythonize([
-        Extension("pywireguard", [
-        "src/pywireguard/wireguard.pyx",
-        "src/pywireguard/c_lib/wireguard.c"
-        ])
-    ])
-)
+setuptools.setup(include_package_data=True)
