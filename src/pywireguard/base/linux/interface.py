@@ -68,7 +68,8 @@ class LinuxInterface(Interface):
                     rx_bytes=self._get_attribute(peer, 'WGPEER_A_RX_BYTES'),
                     tx_bytes=self._get_attribute(peer, 'WGPEER_A_TX_BYTES'),
                     endpoint=endpoint,
-                    allowed_ips=allowed_ips
+                    allowed_ips=allowed_ips,
+                    persistent_keepalive_interval=self._get_attribute(peer, 'WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL')
                 )
                 result.append(n_peer)
         return result

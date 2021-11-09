@@ -49,6 +49,9 @@ class UserspaceInterface(Interface, ABC):
                     value = b64encode(bytes.fromhex(value))
                 if attr == 'allowed_ips':
                     value = re_result
+                if attr in ['persistent_keepalive_interval', 'rx_bytes', 'tx_bytes',
+                            'last_handshake_time_sec', 'last_handshake_time_nsec']:
+                    value = int(value)
                 setattr(peer, attr, value)
         return peer
 
