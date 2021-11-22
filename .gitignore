@@ -5,3 +5,4 @@ dist
 src/pywireguard/wireguard.c
 src/*.egg-info
 .idea
+coverage-report

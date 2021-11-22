@@ -16,4 +16,7 @@ class LinuxPeer(Peer):
             result['endpoint'] = self.endpoint
         if self.allowed_ips is not None:
             result['allowed_ips'] = self.allowed_ips
+        if self.persistent_keepalive_interval is not None:
+            result['persistent_keepalive'] = self.persistent_keepalive_interval
+
         return result

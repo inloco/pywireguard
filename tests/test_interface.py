@@ -1,5 +1,6 @@
-from pywireguard.base.utils import generate_private_key, generate_public_key, generate_preshared_key
-from pywireguard.factory import Interface, Peer
+from src.pywireguard.base.exceptions import BadInterfaceName
+from src.pywireguard.base.utils import generate_private_key, generate_public_key, generate_preshared_key
+from src.pywireguard.factory import Interface, Peer
 
 
 def test_interface():
@@ -9,7 +10,17 @@ def test_interface():
     assert wgtest0.private_key == private_key
     wgtest0.fwmark = 100
     assert wgtest0.fwmark == 100
+    wgtest0.listen_port = 54230
+    assert wgtest0.listen_port == 54230
     assert wgtest0.public_key == generate_public_key(private_key)
+
+
+def test_bad_interface_name():
+    try:
+        Interface('wgtest1000')
+        assert False
+    except BadInterfaceName:
+        assert True
 
 
 def test_peer():
@@ -35,3 +46,14 @@ def test_peer():
     _ = peer.last_handshake_time_nsec
     assert peer.public_key == public_key
     assert peer.allowed_ips == allowed_ips
+    new_allowed_ips = ['192.168.0.0/24']
+    peer.allowed_ips = new_allowed_ips
+    peer.persistent_keepalive_interval = 10
+    wgtest0.upsert_peer(peer)
+    peers = wgtest0.peers
+    idx = peers.index(peer)
+    peer = peers[idx]
+    assert peer.allowed_ips == new_allowed_ips
+    assert peer.persistent_keepalive_interval == 10
+    wgtest0.remove_peer(peer)
+    assert peer not in wgtest0.peers
