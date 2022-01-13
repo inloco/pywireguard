@@ -42,7 +42,6 @@ class UserspaceInterface(Interface, ABC):
         peer = UserspacePeer(public_key)
         for attr, regex in _re_peer_attrs.items():
             re_result = regex.findall(data)
-            print(attr, re_result)
             if len(re_result) > 0:
                 value = re_result[0]
                 if attr == 'preshared_key':
