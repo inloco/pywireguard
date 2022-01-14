@@ -15,10 +15,10 @@ elif sys.platform == 'darwin':
     Interface = DarwinInterface
     Peer = UserspacePeer
 elif sys.platform == 'win32':
-    from .base.windows.interface import WindowsInterface
-    from .base.userspace.peer import UserspacePeer
+    from .base.cli.interface import CLIInterface
+    from .base.cli.peer import CLIPeer
 
-    Interface = WindowsInterface
-    Peer = UserspacePeer
+    Interface = CLIInterface
+    Peer = CLIPeer
 else:
     raise UnsupportedPlatform()

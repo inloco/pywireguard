@@ -35,7 +35,6 @@ class DarwinInterface(UserspaceInterface):
         buffer = ''
         sock = self._get_socket()
         final_cmd = f'set=1\n{command}\n\n'
-        print(final_cmd)
         sock.sendall(final_cmd.encode())
         while '\n\n' not in buffer:
             buffer += sock.recv(1024).decode()
