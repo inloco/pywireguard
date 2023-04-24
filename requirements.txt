@@ -1,2 +1,2 @@
-pyroute2.core~=0.6.5
-cryptography~=3.4.7
+pyroute2.core~=0.6.13
+cryptography~=40.0.2
